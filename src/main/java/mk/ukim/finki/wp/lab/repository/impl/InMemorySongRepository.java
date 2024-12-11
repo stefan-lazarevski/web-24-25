@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Artist;
@@ -34,7 +34,7 @@ public class InMemorySongRepository {
         }
         songOptional
                 .get()
-                .getPerformers()
+                .getArtists()
                 .add(artist);
 
         return artist;

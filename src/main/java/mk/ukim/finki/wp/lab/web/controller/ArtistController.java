@@ -29,7 +29,7 @@ public class ArtistController {
     @PostMapping
     public String getAddArtistPage(@RequestParam String selectedSong, Model model) {
         model.addAttribute("artists", artistService.listArtists().stream()
-                .filter(x->!songService.findByTrackId(selectedSong).orElseThrow(SongDoesntExistException::new).getPerformers().contains(x)));
+                .filter(x->!songService.findByTrackId(selectedSong).orElseThrow(SongDoesntExistException::new).getArtists().contains(x)));
         model.addAttribute("songId", selectedSong);
         return "artistsList";
     }

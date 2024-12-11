@@ -21,31 +21,12 @@
                 Album : <span th:text="${song.getAlbum().getName()}"></span>
             </label>
             <a class="btn btn-default" th:href="@{'/songs/edit-form/{id}' (id=${song.getId()})}">Edit</a>
-            <a class="btn btn-default" th:href="@{'/songs/delete/{songId}' (songId=${song.getId()})}">Delete</a>
+            <a class="btn btn-default" th:href="@{'/songs/delete/{id}' (id=${song.getId()})}">Delete</a>
             <br>
         </th:block><br>
 
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
-
-<!--    <h2>Add, edit or delete a song:</h2>-->
-<!--    <th:block th:each="song : ${songs}">-->
-
-<!--        Title: <span th:text="${song.getTitle()}"></span>-->
-<!--        Genre: <span th:text="${song.getGenre()}"></span>-->
-<!--        Release Year: <span th:text="${song.getReleaseYear()}"></span>-->
-<!--        Album : <span th:text="${song.getAlbum().getName()}"></span>-->
-
-<!--        <form th:action="@{'/songs/edit-form/{id}' (id=${song.getId()})}" th:method="GET" style="display: inline">-->
-<!--            <button type="submit">Edit</button>-->
-<!--        </form>-->
-
-<!--        <form th:action="@{'/songs/delete/{id}' (id=${song.getId()})}" th:method="DELETE" style="display: inline">-->
-<!--            <button type="submit">Delete</button>-->
-<!--        </form>-->
-<!--        <br>-->
-
-<!--    </th:block><br>-->
 
     <form th:action="@{'songs/add-form'}" th:method="GET">
         <button type="submit" class="btn btn-default">Add New Song</button>

@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.lab.web.controller;
 
 import mk.ukim.finki.wp.lab.service.AlbumService;
+import mk.ukim.finki.wp.lab.service.ArtistService;
 import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +13,12 @@ public class SongController {
 
     AlbumService albumService;
     SongService songService;
+    ArtistService artistService;
 
-    public SongController(AlbumService albumService, SongService songService) {
+    public SongController(AlbumService albumService, SongService songService, ArtistService artistService) {
         this.albumService = albumService;
         this.songService = songService;
+        this.artistService = artistService;
     }
 
     @GetMapping
@@ -78,7 +81,8 @@ public class SongController {
     @GetMapping("/delete/{id}") //button so href dodadeno zato ne e @Delete
     public String deleteSong(@PathVariable Long id) {
         try {
-            songService.deleteById(id);
+            artistService.removeSongFromArtists(id);
+            songService.deleteSongById(id);
         }
         catch (Exception e) {
             return "redirect:/add-form";

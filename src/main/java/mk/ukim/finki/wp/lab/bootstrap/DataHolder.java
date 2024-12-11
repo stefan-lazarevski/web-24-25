@@ -20,11 +20,11 @@ public class DataHolder {
 
        artists = new ArrayList<>();
 
-        artists.add(new Artist(1L, "John", "Doe", "rock"));
-        artists.add(new Artist(2L, "Jane", "Smith", "singer"));
-        artists.add(new Artist(3L, "Alice", "Johnson", "rock"));
-        artists.add(new Artist(4L, "Bob", "Brown", "jazz"));
-        artists.add(new Artist(5L, "Charlie", "Davis", "punk"));
+        artists.add(new Artist("John", "Doe", "rock"));
+        artists.add(new Artist("Jane", "Smith", "singer"));
+        artists.add(new Artist("Alice", "Johnson", "rock"));
+        artists.add(new Artist("Bob", "Brown", "jazz"));
+        artists.add(new Artist("Charlie", "Davis", "punk"));
 
         albums = new  ArrayList<>();
         albums.add(new Album("Album 1", "RNB", "2024"));

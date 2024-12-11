@@ -1,11 +1,12 @@
 package mk.ukim.finki.wp.lab.service.Impl;
 
+import jakarta.transaction.Transactional;
 import mk.ukim.finki.wp.lab.model.Album;
 import mk.ukim.finki.wp.lab.model.Artist;
 import mk.ukim.finki.wp.lab.model.Exceptions.InvalidArgumentsException;
 import mk.ukim.finki.wp.lab.model.Exceptions.SongDoesntExistException;
 import mk.ukim.finki.wp.lab.model.Song;
-import mk.ukim.finki.wp.lab.repository.InMemorySongRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.SongRepository;
 import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ import java.util.Optional;
 @Service
 public class SongServiceImpl implements SongService {
 
-    private final InMemorySongRepository songRepository;
+    private final SongRepository songRepository;
 
-    public SongServiceImpl(InMemorySongRepository songRepository) {
+    public SongServiceImpl(SongRepository songRepository) {
         this.songRepository = songRepository;
     }
 
@@ -26,44 +27,30 @@ public class SongServiceImpl implements SongService {
         return songRepository.findAll();
     }
 
-//    @Override
-//    public Artist addArtistToSong(Artist artist, Song song) {
-//        if (song.getPerformers().contains(artist))
-//        {
-//            return artist;
-//        }
-//
-//        try
-//        {
-//            this.songRepository.addArtistToSong(artist, song);
-//        } catch (SongDoesntExistException e)
-//        {
-//            return null;
-//        }
-//
-//        return artist;
-//    }
-
     @Override
-    public void addArtistToSong(Artist artist, Song song) { //Zoshto vrakja Artist?
-        songRepository.addArtistToSong(artist, song);
+    public void addArtistToSong(Artist artist, Song song) {
+        List<Artist> artists = song.getArtists();
+        artists.add(artist);
+        song.setArtists(artists);
+        songRepository.save(song);
     }
 
     @Override
     public Optional<Song> findByTrackId(String trackId) {
-        return songRepository.findByTrackId(trackId);
+        return Optional.ofNullable(songRepository.findByTrackId(trackId));
     }
 
     public Song findBySongId(Long id) {
-        return songRepository.findBySongId(id);
+        return songRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteById(Long id) {
+    @Transactional
+    public void deleteSongById(Long id) {
         if(id == null) {
             throw new SongDoesntExistException();
         }
-        songRepository.deleteSong(id);
+        songRepository.deleteById(id);
     }
 
     @Override
@@ -74,7 +61,7 @@ public class SongServiceImpl implements SongService {
             throw new InvalidArgumentsException();
         }
 
-        songRepository.saveSong(new Song(trackId, title, genre, releaseYear, album));
+        songRepository.save(new Song(trackId, title, genre, releaseYear, album));
     }
 
     @Override
@@ -92,7 +79,7 @@ public class SongServiceImpl implements SongService {
         editedSong.setGenre(genre);
         editedSong.setReleaseYear(releaseYear);
         editedSong.setAlbum(album);
-        songRepository.saveSong(editedSong);
+        songRepository.save(editedSong);
     }
 
 }
