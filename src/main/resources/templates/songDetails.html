@@ -18,13 +18,12 @@
         <li th:text="${artist.getFirstName() + ' ' + artist.getLastName()}"></li>
     </ul>
 </section>
-<form th:action="@{'/artist-form'}" th:method="POST" style="display: inline">
-    <input type="text" th:value="${trackId}" name="trackId" hidden="hidden">
-    <button type="submit">Add another Artist</button>
-</form>
+<!--<form th:action="@{'/artist-form'}" th:method="POST" style="display: inline">-->
+<!--    <input type="text" th:value="${trackId}" name="trackId" hidden="hidden">-->
+<!--    <button type="submit">Add another Artist</button>-->
+<!--</form>-->
 <form th:action="@{'/songs'}" th:method="GET" style="display: inline">
     <button type="submit">View all songs</button>
 </form>
-           <a href="/songs">All Songs</a>
        </body>
    </html>

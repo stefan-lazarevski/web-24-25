@@ -20,6 +20,7 @@ public class Artist {
     private String lastName;
     private String bio;
 
+    //Optional
     @ManyToMany
     @JoinTable(
             name = "artist_song",

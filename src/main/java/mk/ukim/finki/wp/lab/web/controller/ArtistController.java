@@ -41,6 +41,7 @@ public class ArtistController {
         Song song = songService.findByTrackId(id).orElseThrow(SongDoesntExistException::new);
         Artist artist = artistService.findById(artistId).orElse(null);
         songService.addArtistToSong(artist, song);
+        artistService.addSongToArtist(artist, song);
         return "redirect:/song-details/" + song.getId();
     }
 }
