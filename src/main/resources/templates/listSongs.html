@@ -32,7 +32,7 @@
     </div>
 
     <h2>Choose a song to add an artist:</h2>
-    <form th:action="${#authorization.expression('hasRole(''ADMIN'')')} ? '/artist-form' : 'songs/details'" th:method="POST">
+    <form th:action="${#authorization.expression('hasAnyRole(''ADMIN'',''USER'')')} ? '/artist-form' : 'songs/details'" th:method="POST">
         <th:block th:each="song : ${songs}">
             <label>
                 <input type="radio" name="selectedSong" th:value="${song.getTrackId()}" required>

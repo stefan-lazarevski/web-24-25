@@ -36,13 +36,13 @@ public class ArtistController {
     }
 
     @PostMapping("/add/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public String addArtist(@PathVariable String id,
                             @RequestParam Long artistId) {
 
         Song song = songService.findByTrackId(id).orElseThrow(SongDoesntExistException::new);
         Artist artist = artistService.findById(artistId).orElse(null);
-        //songService.addArtistToSong(artist, song);
+        songService.addArtistToSong(artist, song);
         artistService.addSongToArtist(artist, song);
         return "redirect:/song-details/" + song.getId();
     }
