@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="en">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="" lang="en">
 <head>
     <meta charset="utf-8">
     <title>Stefan's Music Store</title>
@@ -10,8 +10,29 @@
     <h1>Welcome to My Music Store</h1>
 </header>
 <main>
+
+    <div>
+            <span sec:authorize="isAuthenticated()">
+                Welcome back
+                <a href="#" class="btn btn-default" sec:authentication="name">
+                </a>
+                 !
+            </span>
+        <br>
+        <span sec:authorize="isAuthenticated()">
+                <a class="btn btn-default" href="/logout">
+                    Logout
+                </a>
+            </span>
+        <span sec:authorize="isAnonymous()">
+                <a class="btn btn-default" href="/login">
+                    Login
+                </a>
+            </span>
+    </div>
+
     <h2>Choose a song to add an artist:</h2>
-    <form th:action="@{'/artist-form'}" th:method="POST">
+    <form th:action="${#authorization.expression('hasRole(''ADMIN'')')} ? '/artist-form' : 'songs/details'" th:method="POST">
         <th:block th:each="song : ${songs}">
             <label>
                 <input type="radio" name="selectedSong" th:value="${song.getTrackId()}" required>
@@ -20,18 +41,22 @@
                 Release Year: <span th:text="${song.getReleaseYear()}"></span>
                 Album : <span th:text="${song.getAlbum().getName()}"></span>
             </label>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
             <a class="btn btn-default" th:href="@{'/songs/edit-form/{id}' (id=${song.getId()})}">Edit</a>
+            </th:block>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
             <a class="btn btn-default" th:href="@{'/songs/delete/{id}' (id=${song.getId()})}">Delete</a>
+            </th:block>
             <br>
         </th:block><br>
 
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
-
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
     <form th:action="@{'songs/add-form'}" th:method="GET">
         <button type="submit" class="btn btn-default">Add New Song</button>
     </form>
-
+    </th:block>
 
 
 </main>
