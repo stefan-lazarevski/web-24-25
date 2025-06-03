@@ -1,1 +1,1 @@
-Laboratory exercises for the subect Web Programming 24-25
+Laboratory exercises for the subject Web Programming @FCSE 24-25
